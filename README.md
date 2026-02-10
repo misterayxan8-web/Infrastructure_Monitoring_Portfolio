@@ -272,6 +272,8 @@ The system calculates energy efficiency based on server load and baseline consum
 │ Current kWh   │      Max      │ Trees Equiv.  │   Accuracy    │      Avg CPU        │
 │    2125       │      30       │     0.5       │    98.5%      │        45%          │
 └───────────────┴───────────────┴───────────────┴───────────────┴─────────────────────┘
+
+
 ```
 
 ### Calculation Formulas

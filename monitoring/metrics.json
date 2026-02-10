@@ -1,0 +1,56 @@
+{
+  "_README": "Edit the values below to update your Grafana dashboards automatically!",
+  "_INSTRUCTIONS": "After editing, wait 30 seconds for changes to appear in Grafana",
+  "_AUTHOR": "Aykhan",
+  "_LAST_UPDATED": "2026-02-04",
+
+  "energy": {
+    "_description": "Energy consumption metrics",
+    "reduction_percent": 30,
+    "baseline_kwh": 2500,
+    "current_kwh": 2125,
+    "target_reduction_percent": 20
+  },
+
+  "cost_savings": {
+    "_description": "Monthly cost savings in AZN",
+    "monthly_savings": 25,
+    "min_savings": 20,
+    "max_savings": 30,
+    "cost_per_kwh": 0.10
+  },
+
+  "co2_reduction": {
+    "_description": "Environmental impact metrics",
+    "monthly_reduction_kg": 12,
+    "co2_per_kwh": 0.4,
+    "trees_equivalent": 0.5
+  },
+
+  "security": {
+    "_description": "SQL injection detection metrics",
+    "threats_detected": 0,
+    "threats_blocked": 0,
+    "requests_scanned": 15000,
+    "accuracy_percent": 98.5
+  },
+
+  "servers": {
+    "_description": "Server infrastructure metrics",
+    "total_monitored": 5,
+    "online": 5,
+    "in_sleep_mode": 0,
+    "avg_cpu_percent": 45,
+    "avg_memory_percent": 62,
+    "avg_temperature_celsius": 52
+  },
+
+  "thresholds": {
+    "_description": "Alert thresholds - alerts trigger when exceeded",
+    "cpu_warning": 80,
+    "cpu_critical": 95,
+    "memory_warning": 85,
+    "temperature_warning": 70
+  }
+}
+

@@ -288,11 +288,6 @@ The system calculates energy efficiency based on server load and baseline consum
 </p>
 
 
-
-
-After:
-<img width="2056" height="1329" alt="After" src="https://github.com/user-attachments/assets/2206f7be-c3eb-41c6-ac1a-4d413dd2c020" />
-
 ### Calculation Formulas
 
 #### 1. Energy Reduction Percentage

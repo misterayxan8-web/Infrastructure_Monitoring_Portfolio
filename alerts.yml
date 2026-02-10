@@ -1,0 +1,93 @@
+# ╔══════════════════════════════════════════════════════════════════════════════╗
+# ║                    PROMETHEUS ALERT RULES                                     ║
+# ║                    Author: Aykhan | Version: 3.1 (FIXED)                      ║
+# ╚══════════════════════════════════════════════════════════════════════════════╝
+#
+# LOCATION: /etc/prometheus/rules/alerts.yml
+# AFTER CHANGES: sudo systemctl restart prometheus
+#
+# ════════════════════════════════════════════════════════════════════════════════
+
+groups:
+  # ════════════════════════════════════════════════════════════════════════════
+  # GROUP 1: TARGET DOWN ALERTS
+  # ════════════════════════════════════════════════════════════════════════════
+  - name: target_alerts
+    rules:
+      - alert: TargetDown
+        expr: up == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Target {{ $labels.job }} is DOWN"
+          description: "Cannot reach {{ $labels.instance }}"
+
+  # ════════════════════════════════════════════════════════════════════════════
+  # GROUP 2: SYSTEM ALERTS (requires node_exporter)
+  # ════════════════════════════════════════════════════════════════════════════
+  - name: system_alerts
+    rules:
+      - alert: HighCPU
+        expr: 100 - (avg by(instance) (rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 80
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High CPU on {{ $labels.instance }}"
+          description: "CPU is {{ printf \"%.1f\" $value }}%"
+
+      - alert: HighMemory
+        expr: (1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) * 100 > 85
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High memory on {{ $labels.instance }}"
+          description: "Memory is {{ printf \"%.1f\" $value }}%"
+
+      - alert: LowDisk
+        expr: (node_filesystem_avail_bytes{mountpoint="/"} / node_filesystem_size_bytes{mountpoint="/"}) * 100 < 20
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Low disk on {{ $labels.instance }}"
+          description: "Only {{ printf \"%.1f\" $value }}% remaining"
+
+  # ════════════════════════════════════════════════════════════════════════════
+  # GROUP 3: SERVICE ALERTS (requires service_checker.py)
+  # ════════════════════════════════════════════════════════════════════════════
+  - name: service_alerts
+    rules:
+      - alert: ServiceDown
+        expr: service_status == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Service {{ $labels.service }} is DOWN"
+          description: "Service {{ $labels.service }} is not running"
+
+  # ════════════════════════════════════════════════════════════════════════════
+  # GROUP 4: KPI ALERTS (requires metrics_exporter.py)
+  # ════════════════════════════════════════════════════════════════════════════
+  - name: kpi_alerts
+    rules:
+      - alert: SecurityThreat
+        expr: achievement_security_threats_detected > 0
+        for: 0m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Security threat detected!"
+          description: "{{ $value }} threats found"
+
+      - alert: HighServerCPU
+        expr: achievement_avg_cpu_percent > 80
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High average CPU"
+          description: "Average CPU is {{ $value }}%"

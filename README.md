@@ -273,6 +273,15 @@ The system calculates energy efficiency based on server load and baseline consum
 │    2125       │      30       │     0.5       │    98.5%      │        45%          │
 └───────────────┴───────────────┴───────────────┴───────────────┴─────────────────────┘
 
+Before:
+
+![Before Screenshot](images/Before.png)
+
+After:
+
+![After Screenshot](images/After.png)
+
+
 
 ```
 
